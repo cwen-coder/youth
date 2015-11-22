@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>沈阳工业大学羽绒服款式信息首次确认</title>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+	<br/>
+	<br>
+	<div class="container">
+		{{if .SuccessStatue}}
+		  <div class="alert alert-success alert-dismissable">
+		    {{.SuccessInfo}} （五秒后自动跳转到首页)
+		    <script>
+			    var t = 5;  
+			      function showTime() {
+			         t -= 1; 
+			          if(t==0) {
+			            window.location.href = "/";
+			        }
+			          //console.log();
+			         setTimeout("showTime()",1000);  
+			      };
+			      showTime();  
+		    </script>
+		  </div>
+		{{end}}
+
+		{{if .ErrorStatue}}
+		  <div class="alert alert-danger alert-dismissable">
+		    {{.ErrorInfo}}
+		  </div>
+		{{end}}
+	</div>
+	
+	<center>
+		<h2>沈阳工业大学羽绒服款式信息首次确认</h2>
+	</center>
+	<div class="container col-sm-offset-1 col-sm-10" >
+		<form method="POST" action="" >
+			<div class="form-group">
+			     <label for="user_name" class="control-label">姓名</label>
+			     <input type="text" class="form-control" aria-describedby="user_name" id="user_name" placeholder="请输入姓名" required="required" maxlength="4" name="user_name" >
+			 </div>
+			 <div class="form-group">
+			     <label for="user_number" class="control-label">学号</label>
+			     <input type="text" class="form-control" aria-describedby="user_number"  placeholder="请输入学号" id="user_number" required="required" maxlength="9" name="user_number" >
+			 </div>
+			 <div class="form-group">
+			     <label for="user_sex" class="control-label">性别</label>
+			     <select class="form-control"  id="user_sex" name="user_sex" >
+			     	<option value="man">男</option>
+			     	<option value="woman">女</option>
+			     </select>
+			 </div>
+			 <div class="form-group">
+			     <label for="user_brand" class="control-label">品牌</label>
+			     <select class="form-control"  id="user_brand" name="user_brand" >
+			  		<option value="add">阿迪</option>
+			  		<option value="nick">NICK</option>
+			     </select>
+			 </div>
+			 <div class="form-group">
+			     <label for="user_color" class="control-label">颜色</label>
+			     <select class="form-control"  id="user_color" name="user_color" >
+			         <option value="red">红</option>
+			         <option value="black">黑</option>
+			     </select>
+			 </div>
+			 <div class="form-group">
+			     <label for="user_size" class="control-label">尺寸</label>
+			     <select class="form-control"  id="user_size" name="user_size" >
+			         <option value="l">L</option>
+			         <option value="xl">XL</option>
+			         <option value="xxl">XXL</option>
+			     </select>
+			 </div>                             
+			 <br>
+			 <div class="form-group">
+			 		<button type="submit" class="btn btn-primary form-control" onclick="return check();" >保存</button>
+			 </div>
+			 <script>
+			 	function check() {
+			 		var num = document.getElementById("user_number").value;
+			 		if(!num.match(/^\d{9}$/)) {
+			 			alert("输入的学号有误！");
+			 			return false;
+			 		}
+			 		return true;
+			 	}
+			 </script>
+		</form>
+	</div>
+{{template "footer" .}}
+</body>
+</html>

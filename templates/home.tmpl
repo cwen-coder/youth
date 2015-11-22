@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>沈阳工业大学羽绒服款式信息确认</title>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<style type="text/css">
+.container_body {
+	margin-top: 8%;
+}
+</style>
+<body>
+<div class="container container_body col-sm-offset-1 col-sm-10">
+	<center>
+		<h2>沈阳工业大学羽绒服款式信息确认</h2>
+	</center>
+	<br>
+	<br>
+	<br>
+	<br>
+    <div class="form-group">
+		<div class="col-sm-12">
+			<a type="button" class="btn btn-primary form-control" href = "/firtConfirm" >首次确认</a>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="form-group">
+		<div class="col-sm-12">
+			<button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#myModal">修改确认</button>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">请输入个人信息</h4>
+	      </div>
+	      <div class="modal-body">
+			<form>
+				<div class="form-group">
+				     <label for="user_name" class="control-label">姓名</label>
+				     <input type="text" class="form-control" aria-describedby="user_name" id="user_name" placeholder="请输入姓名" name="user_name" >
+				 </div>
+				 <div class="form-group">
+				     <label for="user_number" class="control-label">学号</label>
+				     <input type="text" class="form-control" aria-describedby="user_number"  placeholder="请输入学号" id="user_number" name="user_number" >
+				 </div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" id="userSigin" >发射</button>
+	      </div>
+    </div>
+  </div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+	(function(){
+		var dom = {
+			userSigin : $("#userSigin")
+		}
+
+		var sigin = {
+			init: function(){
+	                this.eventFn();
+	        },
+	            //事件参数
+            eventFn: function(){
+               dom.userSigin.bind("click",function() {
+               		var user_name = $("#user_name").val();
+               		if(user_name.length < 2 || user_name.length > 4 ) {
+               			alert("输入的姓名有误");
+               			return;
+               		}
+               		var user_number = $("#user_number").val();
+               		if(!user_number.match(/^\d{9}$/)) {
+               			alert("输入的学号有误！");
+               			return;
+               		}
+               		var url  = "/userSiginCheck";
+               		$.post(url,{
+               			user_name : user_name,
+               			user_number:user_number
+               		},function(data) {
+               			//data = JSON.parse(data)
+               			switch (data) {
+               				case "-1":
+               					alert("输入的姓名有误");
+               					break;
+               				case "-2":
+               					alert("输入的学号有误或是你未在名单中");
+               					break;
+               				case "-3":
+               					alert("对不起！你还未进行首次确认")
+               					break;
+               				case "-4":
+               					alert("输入的姓名与学号不匹配")
+               					break;
+               				case "1":
+               					window.location.href = "/userInforEdit";
+               					break;
+               				default:
+               					alert("未知错误");
+               			}
+               		});
+
+               })
+            }
+		}
+		sigin.init();
+	})();
+</script>
+{{template "footer" .}}
+</body>
+</html>
